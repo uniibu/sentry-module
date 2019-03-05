@@ -1,6 +1,6 @@
 {
-  "name": "@nuxtjs/sentry",
-  "version": "2.3.1",
+  "name": "@bitsler/sentry",
+  "version": "2.3.1-patch2",
   "description": "Sentry module for Nuxt.js",
   "license": "MIT",
   "contributors": [
@@ -9,7 +9,7 @@
     }
   ],
   "main": "lib/sentry.js",
-  "repository": "https://github.com/nuxt-community/sentry-module",
+  "repository": "https://github.com/uniibu/sentry-module",
   "publishConfig": {
     "access": "public"
   },
