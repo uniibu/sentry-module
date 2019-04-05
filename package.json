@@ -1,6 +1,6 @@
 {
   "name": "@bitsler/sentry",
-  "version": "2.3.2-patch1",
+  "version": "2.3.3",
   "description": "Sentry module for Nuxt.js",
   "license": "MIT",
   "contributors": [
