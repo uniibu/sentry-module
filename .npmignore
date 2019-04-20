@@ -1,0 +1,9 @@
+coverage
+example
+test
+.eslintrc.js
+ava.config.js
+.editorconfig
+.eslintignore
+CHANGELOG.md
+

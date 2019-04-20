@@ -1,10 +1,10 @@
-# @nuxtjs/sentry
-[![npm (scoped with tag)](https://img.shields.io/npm/v/@nuxtjs/sentry/latest.svg?style=flat-square)](https://npmjs.com/package/@nuxtjs/sentry)
-[![npm](https://img.shields.io/npm/dt/@nuxtjs/sentry.svg?style=flat-square)](https://npmjs.com/package/@nuxtjs/sentry)
+# @bitsler/sentry
+[![npm (scoped with tag)](https://img.shields.io/npm/v/@bitsler/sentry/latest.svg?style=flat-square)](https://npmjs.com/package/@bitsler/sentry)
+[![npm](https://img.shields.io/npm/dt/@bitsler/sentry.svg?style=flat-square)](https://npmjs.com/package/@bitsler/sentry)
 [![Dependencies](https://david-dm.org/nuxt-community/sentry-module/status.svg?style=flat-square)](https://david-dm.org/nuxt-community/sentry-module)
 [![js-standard-style](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
 
-> Sentry module for Nuxt.js
+> Forked from [@nuxt/sentry](https://github.com/nuxt-community/sentry-module) that uses `hidden-source-map`. A Sentry module for Nuxt.js
 
 ## Features
 
@@ -31,7 +31,7 @@ The module enables error logging through [Sentry](http://sentry.io).
 ```
 
 ### Nuxt compatibility
-Versions of NuxtJS between v1.0.0 and v1.2.1 are **not** supported by this package.
+Versions of NuxtJS before v2.4.0 are **not** supported by this package.
 
 ## Usage
 
@@ -66,22 +66,114 @@ Normally setting required DSN information would be enough.
 - Type: `Boolean`
   - Default: `process.env.SENTRY_DISABLE_CLIENT_SIDE || false`
 
+### disableServerSide
+- Type: `Boolean`
+  - Default: `process.env.SENTRY_DISABLE_SERVER_SIDE || false`
+
+### initialize
+- Type: `Boolean`
+  - Default: `process.env.SENTRY_INITIALIZE || true`
+
 ### publishRelease
 - Type: `Boolean`
   - Default: `process.env.SENTRY_PUBLISH_RELEASE || false`
   - See https://docs.sentry.io/workflow/releases for more information
 
+### disableServerRelease
+- Type: `Boolean`
+  - Default: `process.env.SENTRY_DISABLE_SERVER_RELEASE || false`
+  - See https://docs.sentry.io/workflow/releases for more information
+
+### disableClientRelease
+- Type: `Boolean`
+  - Default: `process.env.SENTRY_DISABLE_CLIENT_RELEASE || false`
+  - See https://docs.sentry.io/workflow/releases for more information
+
+### clientIntegrations
+- Type: `Dictionary`
+  - Default:
+  ```
+   {
+      Dedupe: {},
+      ExtraErrorData: {},
+      ReportingObserver: {},
+      RewriteFrames: {},
+      Vue: {attachProps: true}
+   }
+  ```
+  - See https://docs.sentry.io/platforms/node/pluggable-integrations/ for more information
+
+### serverIntegrations
+- Type: `Dictionary`
+  - Default:
+  ```
+    {
+      Dedupe: {},
+      ExtraErrorData: {},
+      RewriteFrames: {},
+      Transaction: {}
+    }
+  ```
+  - See https://docs.sentry.io/platforms/node/pluggable-integrations/ for more information
+
 ### config
 - Type: `Object`
-  - Default: `{}`
+  - Default: `{
+    environment: this.options.dev ? 'development' : 'production'
+  }`
+
+### serverConfig
+- Type: `Object`
+  - Default: `{
+  }`
+  - If specified, values will override config values for server sentry plugin
+
+### clientConfig
+- Type: `Object`
+  - Default: `{
+  }`
+  - If specified, values will override config values for client sentry plugin
 
 ## Submitting releases to Sentry
 Support for the [sentry-webpack-plugin](https://github.com/getsentry/sentry-webpack-plugin) was introduced [#a6cd8d3](https://github.com/nuxt-community/sentry-module/commit/a6cd8d3b983b4c6659e985736b19dc771fe7c9ea). This can be used to send releases to Sentry. Use the publishRelease  option to enable this feature.
 
 Note that releases are only submitted to Sentry when `(options.publishRelease && !isDev)` is true.
 
+Required: You must set either `options.properties` or  `webpackConfig.configFile` to your `.sentryclirc` file or `sentry.properties` file.
+
+### properties
+- Type: `Object`
+  - Default: `{
+    SENTRY_AUTH_TOKEN: undefined, // can be found at API keys options under the User menu
+    SENTRY_API_KEY: undefined, // legacy/deprecated api key
+    SENTRY_URL: undefined, // The URL to use to connect to sentry. This defaults to https://sentry.io/
+    SENTRY_ORG: undefined, // The slug of the organization to use for a command.
+    SENTRY_PROJECT: undefined // The slug of the project to use for a command.
+  }`
+  - If specified, no need to pass `webpackConfig.configFile`. Values will be passed as environment values to `sentry-webpack-plugin`
+
+### devtool
+- Type: `String`
+  - Default: `#source-map`
+
+### webpackConfig
+- Type: `Object`
+  - Default:
+  ```
+  {
+      include: [],
+      ignore: [
+        'node_modules',
+        '.nuxt/dist/client/img'
+      ],
+      ignoreFile: '.sentrycliignore',
+      urlPrefix: publicPath.startsWith('/') ? `~${publicPath}` : publicPath,
+    }
+  ```
+  - Values will be passed to `sentry-webpack-plugin`. More options can be found at `https://github.com/getsentry/sentry-webpack-plugin`
+
+
 ## License
 [MIT License](./LICENSE)
 
 Copyright (c) Diederik van den Burger <diederik@glue.group>
-
