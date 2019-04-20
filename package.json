@@ -1,6 +1,6 @@
 {
   "name": "@bitsler/sentry",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Sentry module for Nuxt.js",
   "license": "MIT",
   "contributors": [
@@ -17,19 +17,23 @@
   ],
   "main": "lib/module.js",
   "scripts": {
-    "lint": "eslint --ext .vue,.js lib test",
+    "lint": "eslint --fix --ext .vue,.js lib",
+    "generate": "NODE_ENV=production nuxt generate --config-file example/nuxt.config",
     "release": "standard-version && git push --follow-tags && npm publish",
-    "test": "npm run lint && jest"
+    "test": "yarn run lint &&  ava 'test/*.test.js' --verbose "
   },
   "dependencies": {
-    "@sentry/browser": "^4.6.6",
-    "@sentry/node": "^4.6.6",
+    "@sentry/browser": "5.1.0",
+    "@sentry/integrations": "5.1.0",
+    "@sentry/node": "5.1.0",
     "@sentry/webpack-plugin": "^1.6.2",
-    "consola": "^2.5.8",
+    "consola": "^2.6.0",
+    "cross-env": "^5.2.0",
     "deepmerge": "^3.2.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
+    "ava": "^1.4.1",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
@@ -38,11 +42,9 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
-    "nuxt-edge": "^2.6.0-25903509.e155ea43",
+    "jsdom": "^14.0.0",
+    "nuxt": "^2.6.2",
     "standard-version": "^5.0.2"
-  },
-  "peerDependencies": {
-    "nuxt": "<1.0.0 || >1.2.1"
   },
   "publishConfig": {
     "access": "public"
