@@ -5,11 +5,6 @@ All notable changes to this project will be documented in this file. See [standa
 ## [2.3.4](https://github.com/uniibu/sentry-module/compare/v2.3.5...v2.3.4) (2019-04-20)
 
 
-
-## [2.3.5](https://github.com/uniibu/sentry-module/compare/v2.3.4...v2.3.5) (2019-04-20)
-
-
-
 ## [2.3.3](https://github.com/uniibu/sentry-module/compare/v2.3.1...v2.3.3) (2019-04-05)
 
 
